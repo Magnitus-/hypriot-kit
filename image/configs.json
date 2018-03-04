@@ -1,0 +1,16 @@
+{
+    "base_image": {
+        "image": "hypriot/image-builder:latest",
+        "repo": "https://github.com/hypriot/image-builder.git"
+    },
+    "root_fs": {
+        "image": "hypriot/root-fs:latest",
+        "repo": "https://github.com/Magnitus-/os-rootfs.git",
+        "target": "arm64-debian",
+        "hostname": "black-pearl",
+        "groupname": "pirate",
+        "username": "pirate",
+        "password": "hypriot",
+        "version": "v1.2.5"
+    }
+}
