@@ -5,12 +5,23 @@
     },
     "root_fs": {
         "image": "hypriot/root-fs:latest",
-        "repo": "https://github.com/Magnitus-/os-rootfs.git",
+        "repo": "https://github.com/hypriot/os-rootfs.git",
         "target": "arm64-debian",
         "hostname": "black-pearl",
         "groupname": "pirate",
         "username": "pirate",
         "password": "hypriot",
         "version": "v1.2.5"
+    },
+    "blank_image": {
+        "image": "hypriot/blank-image:latest",
+        "repo": "https://github.com/Magnitus-/image-builder-raw.git",
+        "device": "rpi"
+    },
+    "bootloader": {
+
+    },
+    "kernel": {
+
     }
 }

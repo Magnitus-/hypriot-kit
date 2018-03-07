@@ -1,10 +1,10 @@
-import glob, os, shutil
+import glob, os
 
 import docker
 
-from git_repo import clone
+from builder import BuilderBase
 
-class RootFs(object):
+class RootFs(BuilderBase):
     target_properties = {
         "amd64": {
             "BUILD_ARCH": "amd64"
@@ -31,6 +31,9 @@ class RootFs(object):
         }
     }
 
+    repo = 'root_fs'
+    artifact_pattern = 'rootfs-{target}-{version}.tar.gz'
+
     def __init__(self, configs):
         self.image = configs['root_fs']['image']
         self.repo = configs['root_fs']['repo']
@@ -41,31 +44,14 @@ class RootFs(object):
         self.password = configs['root_fs']['password']
         self.version = configs['root_fs']['version']
 
-    def image_is_built(self):
-        try:
-            client = docker.from_env()
-            image = client.images.get(self.image)
-            return True
-        except docker.errors.ImageNotFound:
-            return False
 
-    def artifact_is_built(self):
-        artifact_matches = glob.glob(os.path.join(os.environ.get('HYPRIOT_ARTIFACTS_VOLUME_PATH'), 'rootfs-*.tar.gz'))
-        if len(artifact_matches) > 0:
-            return True
-        return False
+    def get_artifacts_names(self):
+        return [RootFs.artifact_pattern.format(**{
+            "target": self.target,
+            "version": self.version
+        })]
 
-    def is_built(self):
-        return self.image_is_built() and self.artifact_is_built()
-
-    def build_image(self):
-        repo_dir = os.path.join(os.environ.get('WORKSPACE'), 'repos', 'root_fs')
-        clone(self.repo, repo_dir)
-        client = docker.from_env()
-        client.images.build(path=repo_dir, tag=self.image)
-        shutil.rmtree(repo_dir)
-
-    def build_artifact(self):
+    def build_artifacts(self):
         args = {
             "remove": True,
             "privileged": True,
@@ -89,9 +75,3 @@ class RootFs(object):
 
         client = docker.from_env()
         client.containers.run(**args)
-
-    def build(self):
-        if not self.image_is_built():
-            self.build_image()
-        if not self.artifact_is_built():
-            self.build_artifact()

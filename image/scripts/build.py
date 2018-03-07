@@ -2,8 +2,9 @@ import os, json, sys
 
 from base_image import BaseImage
 from root_fs import RootFs
+from blank_image import BlankImage
 
-ARTIFACTS = (('base_image', BaseImage), ('root_fs', RootFs))
+ARTIFACTS = (('base_image', BaseImage), ('root_fs', RootFs), ('blank_image', BlankImage))
 
 def get_configs():
     with open(os.path.join(os.getcwd(), 'configs.json'), 'r') as configs_file:
