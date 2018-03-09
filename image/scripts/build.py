@@ -3,8 +3,9 @@ import os, json, sys
 from base_image import BaseImage
 from root_fs import RootFs
 from blank_image import BlankImage
+from rpi_bootloader import RpiBootloader
 
-ARTIFACTS = (('base_image', BaseImage), ('root_fs', RootFs), ('blank_image', BlankImage))
+ARTIFACTS = (('base_image', BaseImage), ('root_fs', RootFs), ('blank_image', BlankImage), ('rpi_bootloader', RpiBootloader))
 
 def get_configs():
     with open(os.path.join(os.getcwd(), 'configs.json'), 'r') as configs_file:

@@ -15,13 +15,15 @@
     },
     "blank_image": {
         "image": "hypriot/blank-image:latest",
-        "repo": "https://github.com/Magnitus-/image-builder-raw.git",
+        "repo": "https://github.com/hypriot/image-builder-raw.git",
         "device": "rpi"
     },
-    "bootloader": {
-
+    "rpi_bootloader": {
+        "image": "hypriot/rpi-bootloader:latest",
+        "repo": "https://github.com/Magnitus-/rpi-bootloader.git",
+        "firmware_repo": "https://www.github.com/raspberrypi/firmware"
     },
-    "kernel": {
+    "rpi_kernel": {
 
     }
 }
