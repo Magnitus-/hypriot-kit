@@ -20,10 +20,13 @@
     },
     "rpi_bootloader": {
         "image": "hypriot/rpi-bootloader:latest",
-        "repo": "https://github.com/Magnitus-/rpi-bootloader.git",
+        "repo": "https://github.com/DieterReuter/rpi-bootloader.git",
         "firmware_repo": "https://www.github.com/raspberrypi/firmware"
     },
     "rpi_kernel": {
-
+        "image": "hypriot/rpi-kernel:latest",
+        "repo": "https://github.com/Magnitus-/rpi64-kernel.git",
+        "kernel_repo": "https://www.github.com/raspberrypi/linux",
+        "branch": "rpi-4.9.y"
     }
 }

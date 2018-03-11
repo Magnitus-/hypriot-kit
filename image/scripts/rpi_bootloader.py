@@ -5,8 +5,8 @@ import docker
 from builder import BuilderBase
 
 class RpiBootloader(BuilderBase):
-    artifact_pattern = "{device}-raw.img.zip"
-    artifact_checksum_pattern = "{device}-raw.img.zip.sha256"
+    artifact_pattern = "rpi-raw.img.zip"
+    artifact_checksum_pattern = "rpi-raw.img.zip.sha256"
 
     def __init__(self, configs):
         self.image = configs['rpi_bootloader']['image']
