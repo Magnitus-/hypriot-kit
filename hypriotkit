@@ -1,0 +1,23 @@
+#!/usr/bin/env python2
+
+import os
+
+import hypriotkit
+
+def get_arguments():
+    pass
+
+if __name__ == "__main__":
+    ensure_hypriotkit_image.ensure_hypriotkit_image()
+    ensure_hypriotkit_image.ensure_hypriotkil_volume()
+
+    arguments = get_arguments()
+
+    volume = arguments['volume'] if arguments.get('volume') is not None else 'hypriot-artifacts'
+    image = arguments['image'] if arguments.get('image') is not None else 'magnitus/hypriot-kit:latest'
+    target = arguments['target'] if arguments.get('target') is not None else os.cwd()
+
+    if arguments['cmd'] == 'build':
+        hypriotkit.build(target, volume, image)
+    elif arguments['cmd'] == 'clean':
+        hypriotkit.destroy_volume(volume)
