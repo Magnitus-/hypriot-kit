@@ -1,23 +1,36 @@
 #!/usr/bin/env python2
 
 import os
+import argparse
 
 import hypriotkit
 
 def get_arguments():
-    pass
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--volume", help="Docker volume name to cache artifacts in (defaults to hypriot-artifacts)")
+    parser.add_argument("--image", help="Docker image used to orchestrate artifacts builds (defaults to magnitus/hypriot-kit:latest)")
+    parser.add_argument("--target", help="Directory of custom user configuration file and where artifacts are outputted")
+    parser.add_argument("--cmd", help="Command to run. Can be 'build' to build artifacts or 'clean' to remove volume that caches artifacts")
+
+    arguments = parser.parse_args()
+    if arguments.cmd is None:
+        print "--cmd argument is not optional."
+        exit(255)
+
+    return arguments
 
 if __name__ == "__main__":
-    ensure_hypriotkit_image.ensure_hypriotkit_image()
-    ensure_hypriotkit_image.ensure_hypriotkil_volume()
+    hypriotkit.ensure_hypriotkit_image()
+    hypriotkit.ensure_hypriotkil_volume()
 
     arguments = get_arguments()
 
-    volume = arguments['volume'] if arguments.get('volume') is not None else 'hypriot-artifacts'
-    image = arguments['image'] if arguments.get('image') is not None else 'magnitus/hypriot-kit:latest'
-    target = arguments['target'] if arguments.get('target') is not None else os.cwd()
+    volume = arguments.volume if arguments.volume is not None else 'hypriot-artifacts'
+    image = arguments.image if arguments.image is not None else 'magnitus/hypriot-kit:latest'
+    target = arguments.target if arguments.target is not None else os.cwd()
 
-    if arguments['cmd'] == 'build':
+    if arguments.cmd == 'build':
         hypriotkit.build(target, volume, image)
-    elif arguments['cmd'] == 'clean':
+        hypriotkit.get_volume_content(target, volume, image)
+    elif arguments.cmd == 'clean':
         hypriotkit.destroy_volume(volume)
