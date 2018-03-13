@@ -1,4 +1,4 @@
-import os, subprocess, shutil
+import os
 
 import docker
 
@@ -20,32 +20,35 @@ def ensure_volume(volume='hypriot-artifacts'):
             labels={"content": "hypriot-os"}
         )
 
-def build(target, volume='hypriot-artifacts', image='magnitus/hypriot-kit:latest'):
-    user_configs_path = os.path.join(target, 'configs.json')
-
+def build(target=None, volume='hypriot-artifacts', image='magnitus/hypriot-kit:latest'):
     volumes = {
         volume: {
             "bind": "/opt/app/artifacts"
+        },
+        "/var/run/docker.sock": {
+            "bind": "/var/run/docker.sock"
         }
     }
 
-    if os.path.isfile(user_configs_path):
+    if target is not None and os.path.isfile(user_configs_path):
+        user_configs_path = os.path.join(target, 'configs.json')
         volumes[user_configs_path] = "/opt/app/user/configs.json"
 
     client = docker.from_env()
     client.containers.run(
         image=image,
-        auto_remove=False,
-        volumes=volumes
+        remove=True,
+        volumes=volumes,
+        command=["python", "build.py"]
     )
 
 
 def get_volume_content(target, volume='hypriot-artifacts', image='magnitus/hypriot-kit:latest'):
     client = docker.from_env()
-    command = 'cp /opt/volume/* /opt/target/ && chown {uid}:{gid} /opt/target/*'
+    command = "sh -c 'cp /opt/volume/* /opt/target/  && chown {uid}:{gid} /opt/target/*'"
     client.containers.run(
         image=image,
-        auto_remove=False,
+        remove=True,
         volumes={
             volume: {
                 "bind": "/opt/volume"
