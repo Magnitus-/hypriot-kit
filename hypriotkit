@@ -10,27 +10,28 @@ def get_arguments():
     parser.add_argument("--volume", help="Docker volume name to cache artifacts in (defaults to hypriot-artifacts)")
     parser.add_argument("--image", help="Docker image used to orchestrate artifacts builds (defaults to magnitus/hypriot-kit:latest)")
     parser.add_argument("--target", help="Directory of custom user configuration file and where artifacts are outputted")
-    parser.add_argument("--cmd", help="Command to run. Can be 'build' to build artifacts or 'clean' to remove volume that caches artifacts")
+    parser.add_argument("--cmd", help="Command to run. Can be 'build' to build artifacts, 'clean' to remove volume that caches artifacts, or 'upgrade' to upgrade the build image")
 
     arguments = parser.parse_args()
-    if arguments.cmd is None:
-        print "--cmd argument is not optional."
-        exit(255)
-
     return arguments
 
 if __name__ == "__main__":
-    hypriotkit.ensure_hypriotkit_image()
-    hypriotkit.ensure_hypriotkil_volume()
+    hypriotkit.ensure_image()
+    hypriotkit.ensure_volume()
 
     arguments = get_arguments()
 
     volume = arguments.volume if arguments.volume is not None else 'hypriot-artifacts'
     image = arguments.image if arguments.image is not None else 'magnitus/hypriot-kit:latest'
-    target = arguments.target if arguments.target is not None else os.cwd()
+    target = arguments.target if arguments.target is not None else os.getcwd()
 
     if arguments.cmd == 'build':
         hypriotkit.build(target, volume, image)
         hypriotkit.get_volume_content(target, volume, image)
     elif arguments.cmd == 'clean':
         hypriotkit.destroy_volume(volume)
+    elif arguments.cmd == 'upgrade':
+        hypriotkit.upgrade_image()
+    else:
+        print "--cmd argument is not optional and must be one of: build, clean, upgrade"
+        exit(255)

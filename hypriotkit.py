@@ -2,6 +2,10 @@ import os
 
 import docker
 
+def upgrade_image(image='magnitus/hypriot-kit:latest'):
+    client = docker.from_env()
+    client.images.pull(image)
+
 def ensure_image(image='magnitus/hypriot-kit:latest'):
     try:
         client = docker.from_env()
@@ -30,9 +34,10 @@ def build(target=None, volume='hypriot-artifacts', image='magnitus/hypriot-kit:l
         }
     }
 
-    if target is not None and os.path.isfile(user_configs_path):
+    if target is not None:
         user_configs_path = os.path.join(target, 'configs.json')
-        volumes[user_configs_path] = "/opt/app/user/configs.json"
+        if os.path.isfile(user_configs_path):
+            volumes[user_configs_path] = "/opt/app/user/configs.json"
 
     client = docker.from_env()
     client.containers.run(
