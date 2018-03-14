@@ -3,7 +3,7 @@
 import os
 import argparse
 
-import hypriotkit
+import hypriotkitapi as hypriotkit
 
 def get_arguments():
     parser = argparse.ArgumentParser()

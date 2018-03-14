@@ -7,6 +7,6 @@ setup(name='hypriotkit',
       author_email='eric_vallee@webificservices.com',
       url='https://github.com/Magnitus-/hypriot-kit',
       licence='MIT License',
-      packages=['hypriotkit'],
+      packages=['hypriotkitapi'],
       platforms='Linux',
       scripts=['hypriotkit'])
