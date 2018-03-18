@@ -26,7 +26,7 @@ class RpiBootloader(BuilderBase):
                 }
             },
             "environment": {
-                "TIMESTAMP_OUTPUT": False,
+                "TIMESTAMP_OUTPUT": "false",
                 "FIRMWARE_REPO": self.firmware_repo
             },
             "image": self.image

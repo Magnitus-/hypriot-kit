@@ -2,13 +2,12 @@
 
 This is a work in progress. I'm making the repo public at the present time even though it isn't completed to publish an image on Docker Hub.
 
-Currently, the components for the SD image are generated, but not the final SD image.
-
-Also, while the binary to run the project in a more user-friendly way is completed, the logic to combine user-provided configurations with the default configuration baked into the image is not yet implemented.
+While the binary to run the project in a more user-friendly way is completed, the logic to combine user-provided configurations with the default configuration baked into the image is not yet implemented.
 
 TODO:
-- Combine SD image components into SD image
 - Add logic to merge user-provided configuration into the default
+- Add optional verbosity (nice to have)
+- Add option to use mapped volume instead of named volume for artifacts (nice to have)
 
 # Overview
 

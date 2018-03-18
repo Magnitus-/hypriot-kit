@@ -5,13 +5,15 @@ from root_fs import RootFs
 from blank_image import BlankImage
 from rpi_bootloader import RpiBootloader
 from rpi_kernel import RpiKernel
+from rpi_sd_image import RpiSdImage
 
 ARTIFACTS = (
     ('base_image', BaseImage),
     ('root_fs', RootFs),
     ('blank_image', BlankImage),
     ('rpi_bootloader', RpiBootloader),
-    ('rpi_kernel', RpiKernel))
+    ('rpi_kernel', RpiKernel),
+    ('rpi_sd_image', RpiSdImage))
 
 def get_configs():
     with open(os.path.join(os.getcwd(), 'configs.json'), 'r') as configs_file:

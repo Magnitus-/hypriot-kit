@@ -28,5 +28,13 @@
         "repo": "https://github.com/Magnitus-/rpi64-kernel.git",
         "kernel_repo": "https://www.github.com/raspberrypi/linux",
         "branch": "rpi-4.9.y"
+    },
+    "rpi_sd_image": {
+        "image": "hypriot/rpi-sd-image:latest",
+        "repo": "https://github.com/Magnitus-/image-builder-rpi64.git",
+        "docker_engine_version": "18.02.0~ce",
+        "docker_compose_version": "1.19.0",
+        "docker_machine_version": "0.13.0",
+        "version": "latest"
     }
 }

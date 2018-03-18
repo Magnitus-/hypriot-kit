@@ -57,7 +57,7 @@ class RpiKernel(BuilderBase):
                 }
             },
             "environment": {
-                "TIMESTAMP_OUTPUT": False,
+                "TIMESTAMP_OUTPUT": "false",
                 "RPI_KERNEL_BRANCH": self.branch,
                 "RPI_KERNEL_REPO": self.kernel_repo
             },
