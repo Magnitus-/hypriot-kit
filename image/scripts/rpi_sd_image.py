@@ -57,7 +57,8 @@ class RpiSdImage(BuilderBase):
                 "BOOTLOADER_ARTIFACT": rpi_bootloader_instance.get_artifacts_names()[0],
                 "RAW_IMAGE_ARTIFACT": blank_image_instance.get_artifacts_names()[0],
                 "ROOT_FS_ARTIFACT": root_fs_instance.get_artifacts_names()[0],
-                "KERNEL_ARTIFACT": rpi_kernel_instance.get_artifacts_names()[0]
+                "KERNEL_ARTIFACT": rpi_kernel_instance.get_artifacts_names()[0],
+                "VERSION": self.version
             },
             "image": self.image
         }
