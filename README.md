@@ -7,7 +7,6 @@ While the binary to run the project in a more user-friendly way is completed, th
 TODO:
 - Add logic to merge user-provided configuration into the default
 - Add optional verbosity (nice to have)
-- Add option to use mapped volume instead of named volume for artifacts (nice to have)
 
 # Overview
 
@@ -22,8 +21,6 @@ My current aim is to compile a 64 bit Raspberry Pi hypriot image. Support for ot
 You will need Python 2, the [Docker Python Package](https://github.com/docker/docker-py), Docker, docker-machine, Virtualbox and I think that's about it.
 
 This script is being developped on a Ubuntu 16.04 machine and should work on any Linux machines that have a kernel recent enough to run Docker.
-
-It should also theoretically work on a Mac, but being Macless and not deeply versed on the status of Mac compatibility, it's hard for me to say until someone with a Mac runs it and tells me it works.
 
 # Usage
 
@@ -70,33 +67,39 @@ You can change the image name to one that you control.
 ensure_volume(volume='hypriot-artifacts')
 ```
 
-Creates the volume to cache Hypriot artifacts if it is not present on your machine.
+Creates the Docker volume **volume** to store Hypriot artifacts if it is not present on your machine.
 
 Here, you can change the expected volume name, potentially to avoid name clashes or cache different artifacts for different builds.
+
+If the value of **volume** is a mapped volume, this is a no-op.
 
 ```
 build(target=None, volume='hypriot-artifacts', image='magnitus/hypriot-kit:latest')
 ```
 
-Builds the Hypriot OS artifacts in the Docker cache volume. If a 'configuration.json' file is present in the 'target' directory, it will be merged with the default configuration.
+Builds the Hypriot OS artifacts in the Docker volume **volume**. If a 'configs.json' file is present in the **target** directory, it will be merged with the default configuration.
 
-As before, you can also change the expected build image name and volume name in the options.
+As before, you can also change the expected build image name and volume in the options.
 
 ```
 get_volume_content(target, volume='hypriot-artifacts', image='magnitus/hypriot-kit:latest')
 ```
 
-Copy the Hypriot artifacts built into the Docker cache volume to 'target'.
+Copy the Hypriot artifacts built into **volume** to **target**.
 
 As before, you can also change the expected build image name and volume name in the options.
+
+If the value of **volume** is a mapped volume, this is a no-op.
 
 ```
 destroy_volume(volume='hypriot-artifacts')
 ```
 
-Destroy the Docker cache volume.
+Destroy the Docker volume **volume**.
 
 As before, you can also change the expected volume name in the options.
+
+If the value of **volume** is a mapped volume, this is a no-op.
 
 ## The binary
 
@@ -104,12 +107,12 @@ The binary is simply **hypriotkit** and can be executed on the shell after insta
 
 It has the following build options:
 
-* target: Target directory where the artifacts should be copied to. If a **configuration.json** file is present in that directory, it will be merged with the default configurations.
+* target: Target directory where the artifacts should be copied to. If a **configs.json** file is present in that directory, it will be merged with the default configurations.
 * image: Build image to pull if not present. Defaults to 'magnitus/hypriot-kit:latest'.
-* volume: Cache volume name to store Hypriot artifacts in. Defaults to 'hypriot-artifacts'.
+* volume: Named volume to cache Hypriot artifacts in prior to copying them to **target**. If this is given the value of 'target', then no named cache volume will be used. Defaults to 'target'.
 * cmd:
   * build: build the artifacts
-  * clean: delete the Docker cache volume
+  * clean: delete the Docker volume if it is a named volume
   * upgrade: pull the latest build image from the registry
 
 For help, you can type:

@@ -14,15 +14,16 @@ def ensure_image(image='magnitus/hypriot-kit:latest'):
         client.images.pull(image)
 
 def ensure_volume(volume='hypriot-artifacts'):
-    try:
-        client = docker.from_env()
-        client.volumes.get(volume)
-    except docker.errors.NotFound:
-        client.volumes.create(
-            name=volume,
-            driver='local',
-            labels={"content": "hypriot-os"}
-        )
+    if not volume.startswith('/'):
+        try:
+            client = docker.from_env()
+            client.volumes.get(volume)
+        except docker.errors.NotFound:
+            client.volumes.create(
+                name=volume,
+                driver='local',
+                labels={"content": "hypriot-os"}
+            )
 
 def build(target=None, volume='hypriot-artifacts', image='magnitus/hypriot-kit:latest'):
     volumes = {
@@ -44,30 +45,34 @@ def build(target=None, volume='hypriot-artifacts', image='magnitus/hypriot-kit:l
         image=image,
         remove=True,
         volumes=volumes,
+        environment={
+            "HYPRIOT_ARTIFACTS_VOLUME": volume 
+        },
         command=["python", "build.py"]
     )
 
-
 def get_volume_content(target, volume='hypriot-artifacts', image='magnitus/hypriot-kit:latest'):
-    client = docker.from_env()
-    command = "sh -c 'cp /opt/volume/* /opt/target/  && chown {uid}:{gid} /opt/target/*'"
-    client.containers.run(
-        image=image,
-        remove=True,
-        volumes={
-            volume: {
-                "bind": "/opt/volume"
+    if not volume.startswith('/'):
+        client = docker.from_env()
+        command = "sh -c 'cp /opt/volume/* /opt/target/  && chown {uid}:{gid} /opt/target/*'"
+        client.containers.run(
+            image=image,
+            remove=True,
+            volumes={
+                volume: {
+                    "bind": "/opt/volume"
+                },
+                target: {
+                    "bind": "/opt/target"
+                }
             },
-            target: {
-                "bind": "/opt/target"
-            }
-        },
-        command=command.format(
-            uid=str(os.geteuid()),
-            gid=str(os.getegid())
+            command=command.format(
+                uid=str(os.geteuid()),
+                gid=str(os.getegid())
+            )
         )
-    )
 
 def destroy_volume(volume='hypriot-artifacts'):
-    client = docker.from_env()
-    client.volumes.get(volume).remove()
+    if not volume.startswith('/'):
+        client = docker.from_env()
+        client.volumes.get(volume).remove()

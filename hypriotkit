@@ -16,14 +16,14 @@ def get_arguments():
     return arguments
 
 if __name__ == "__main__":
-    hypriotkit.ensure_image()
-    hypriotkit.ensure_volume()
-
     arguments = get_arguments()
 
-    volume = arguments.volume if arguments.volume is not None else 'hypriot-artifacts'
     image = arguments.image if arguments.image is not None else 'magnitus/hypriot-kit:latest'
     target = arguments.target if arguments.target is not None else os.getcwd()
+    volume = arguments.volume if arguments.volume is not None else target
+
+    hypriotkit.ensure_image()
+    hypriotkit.ensure_volume(volume)
 
     if arguments.cmd == 'build':
         hypriotkit.build(target, volume, image)
