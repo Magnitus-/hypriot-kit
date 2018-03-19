@@ -7,6 +7,7 @@ import hypriotkitapi as hypriotkit
 
 def get_arguments():
     parser = argparse.ArgumentParser()
+    parser.add_argument("--verbosity", help="Indicate how verbose the build should be. Can be: quiet, info or debug")
     parser.add_argument("--volume", help="Docker volume name to cache artifacts in (defaults to hypriot-artifacts)")
     parser.add_argument("--image", help="Docker image used to orchestrate artifacts builds (defaults to magnitus/hypriot-kit:latest)")
     parser.add_argument("--target", help="Directory of custom user configuration file and where artifacts are outputted")
@@ -21,12 +22,13 @@ if __name__ == "__main__":
     image = arguments.image if arguments.image is not None else 'magnitus/hypriot-kit:latest'
     target = arguments.target if arguments.target is not None else os.getcwd()
     volume = arguments.volume if arguments.volume is not None else target
+    verbosity = arguments.verbosity if arguments.verbosity is not None else 'quiet'
 
     hypriotkit.ensure_image()
     hypriotkit.ensure_volume(volume)
 
     if arguments.cmd == 'build':
-        hypriotkit.build(target, volume, image)
+        hypriotkit.build(target, volume, image, verbosity)
         hypriotkit.get_volume_content(target, volume, image)
     elif arguments.cmd == 'clean':
         hypriotkit.destroy_volume(volume)

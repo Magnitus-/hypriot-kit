@@ -4,6 +4,8 @@ services:
         build:
             context: ./image
             dockerfile: Dockerfile
+        environment:
+            - VERBOSITY=info
         image: hypriot-kit:latest
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock

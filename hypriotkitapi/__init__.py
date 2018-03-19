@@ -25,7 +25,7 @@ def ensure_volume(volume='hypriot-artifacts'):
                 labels={"content": "hypriot-os"}
             )
 
-def build(target=None, volume='hypriot-artifacts', image='magnitus/hypriot-kit:latest'):
+def build(target=None, volume='hypriot-artifacts', image='magnitus/hypriot-kit:latest', verbosity='quiet'):
     volumes = {
         volume: {
             "bind": "/opt/app/artifacts"
@@ -46,7 +46,8 @@ def build(target=None, volume='hypriot-artifacts', image='magnitus/hypriot-kit:l
         remove=True,
         volumes=volumes,
         environment={
-            "HYPRIOT_ARTIFACTS_VOLUME": volume 
+            "HYPRIOT_ARTIFACTS_VOLUME": volume,
+            "VERBOSITY": verbosity
         },
         command=["python", "build.py"]
     )

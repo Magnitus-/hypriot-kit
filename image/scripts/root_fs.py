@@ -34,6 +34,9 @@ class RootFs(BuilderBase):
     repo = 'root_fs'
     artifact_pattern = 'rootfs-{target}-{version}.tar.gz'
 
+    def get_description(self):
+        return "Root Filesystem"
+
     def __init__(self, configs):
         self.image = configs['root_fs']['image']
         self.repo = configs['root_fs']['repo']

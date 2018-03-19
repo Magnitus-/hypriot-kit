@@ -1,12 +1,12 @@
 # WIP
 
-This is a work in progress. I'm making the repo public at the present time even though it isn't completed to publish an image on Docker Hub.
+This is a work in progress.
 
-While the binary to run the project in a more user-friendly way is completed, the logic to combine user-provided configurations with the default configuration baked into the image is not yet implemented.
+Missing functionality is outlined below.
 
 TODO:
 - Add logic to merge user-provided configuration into the default
-- Add optional verbosity (nice to have)
+- Add output for debug verbosity
 
 # Overview
 
@@ -74,10 +74,12 @@ Here, you can change the expected volume name, potentially to avoid name clashes
 If the value of **volume** is a mapped volume, this is a no-op.
 
 ```
-build(target=None, volume='hypriot-artifacts', image='magnitus/hypriot-kit:latest')
+build(target=None, volume='hypriot-artifacts', image='magnitus/hypriot-kit:latest', verbosity='quiet')
 ```
 
 Builds the Hypriot OS artifacts in the Docker volume **volume**. If a 'configs.json' file is present in the **target** directory, it will be merged with the default configuration.
+
+Build **verbosity** can be set to 'quiet', 'info' or 'debug'. The first will output only error, the second will output a top-level overview of what is happening and the third will ouput the build containers' output which may be substantial.
 
 As before, you can also change the expected build image name and volume in the options.
 
@@ -109,11 +111,12 @@ It has the following build options:
 
 * target: Target directory where the artifacts should be copied to. If a **configs.json** file is present in that directory, it will be merged with the default configurations.
 * image: Build image to pull if not present. Defaults to 'magnitus/hypriot-kit:latest'.
-* volume: Named volume to cache Hypriot artifacts in prior to copying them to **target**. If this is given the value of 'target', then no named cache volume will be used. Defaults to 'target'.
+* volume: Named volume to cache Hypriot artifacts in prior to copying them to **target**. If no value is passed, then a mapped volume to **target** is used directly, bypassing the need for a named caching volume.
 * cmd:
   * build: build the artifacts
   * clean: delete the Docker volume if it is a named volume
   * upgrade: pull the latest build image from the registry
+* verbosity: Build verbosity. Defaults to 'quiet'. See **build** method of the API for details.
 
 For help, you can type:
 

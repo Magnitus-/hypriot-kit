@@ -11,6 +11,9 @@ class RpiKernel(BuilderBase):
     artifact_bootfiles_pattern = "bootfiles.tar.gz"
     artifact_bootfiles_checksum_pattern = "bootfiles.tar.gz.sha256"
 
+    def get_description(self):
+        return "Raspberry Pi 64 Bits Kernel"
+
     def __init__(self, configs):
         self.image = configs['rpi_kernel']['image']
         self.repo = configs['rpi_kernel']['repo']

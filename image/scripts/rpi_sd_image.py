@@ -13,6 +13,9 @@ class RpiSdImage(BuilderBase):
     artifact_pattern = "hypriotos-rpi64-{version}.img.zip"
     artifact_checksum_pattern = "hypriotos-rpi64-{version}.img.zip.sha256"
 
+    def get_description(self):
+        return "Raspberry Pi 64 Bits SD Image"
+
     def __init__(self, configs):
         self.image = configs['rpi_sd_image']['image']
         self.repo = configs['rpi_sd_image']['repo']
@@ -24,8 +27,8 @@ class RpiSdImage(BuilderBase):
 
     def get_artifacts_names(self):
         return [
-            RpiKernel.artifact_pattern.format(version=self.version),
-            RpiKernel.artifact_checksum_pattern.format(version=self.version)
+            RpiSdImage.artifact_pattern.format(version=self.version),
+            RpiSdImage.artifact_checksum_pattern.format(version=self.version)
         ]
 
     def build_artifacts(self):

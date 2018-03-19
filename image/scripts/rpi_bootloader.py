@@ -8,6 +8,9 @@ class RpiBootloader(BuilderBase):
     artifact_pattern = "rpi-bootloader.tar.gz"
     artifact_checksum_pattern = "rpi-bootloader.tar.gz.sha256"
 
+    def get_description(self):
+        return "Raspberry Pi Bootloader"
+
     def __init__(self, configs):
         self.image = configs['rpi_bootloader']['image']
         self.repo = configs['rpi_bootloader']['repo']

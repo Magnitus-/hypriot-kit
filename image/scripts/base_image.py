@@ -3,6 +3,9 @@ from builder import BuilderBase
 class BaseImage(BuilderBase):
     repo = 'base_image'
 
+    def get_description(self):
+        return "Base Build Docker Image"
+
     def __init__(self, configs):
         self.image = configs['base_image']['image']
         self.repo = configs['base_image']['repo']

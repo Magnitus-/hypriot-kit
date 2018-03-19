@@ -7,6 +7,8 @@ from rpi_bootloader import RpiBootloader
 from rpi_kernel import RpiKernel
 from rpi_sd_image import RpiSdImage
 
+from output import show
+
 ARTIFACTS = (
     ('base_image', BaseImage),
     ('root_fs', RootFs),
@@ -17,12 +19,20 @@ ARTIFACTS = (
 
 def get_configs():
     with open(os.path.join(os.getcwd(), 'configs.json'), 'r') as configs_file:
-        return json.loads(configs_file.read())
+        default_config = json.loads(configs_file.read())
+    return default_config
 
 if __name__ == "__main__":
     configs = get_configs()
     for artifact in ARTIFACTS:
         if artifact[0] in configs:
             build_inst = artifact[1](configs)
+
+            show('*************************************************', 'info')
+            show('Building component: ' + build_inst.get_description(), 'info')
+            show('*************************************************', 'info')
+
             if not build_inst.is_built():
                 build_inst.build()
+
+            show('\n', 'info')

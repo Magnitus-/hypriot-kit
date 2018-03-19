@@ -3,6 +3,7 @@ FROM python:2.7-slim-stretch
 ENV WORKSPACE /opt/app
 ENV HYPRIOT_ARTIFACTS_VOLUME hypriot-artifacts
 ENV HYPRIOT_ARTIFACTS_VOLUME_PATH $WORKSPACE/artifacts
+ENV VERBOSITY=quiet
 
 RUN apt-get update && apt-get install -y curl git && apt-get clean
 
@@ -15,4 +16,4 @@ WORKDIR $WORKSPACE
 
 RUN pip install -r requirements.txt
 
-CMD ["python", "build.py"]
+CMD ["python", "-u", "build.py"]
