@@ -25,7 +25,7 @@
     },
     "rpi_kernel": {
         "image": "hypriot/rpi-kernel:latest",
-        "repo": "https://github.com/Magnitus-/rpi64-kernel.git",
+        "repo": "https://github.com/DieterReuter/rpi64-kernel.git",
         "kernel_repo": "https://www.github.com/raspberrypi/linux",
         "branch": "rpi-4.9.y"
     },
