@@ -11,7 +11,7 @@ class BlankImage(BuilderBase):
     artifact_checksum_pattern = "{device}-raw.img.zip.sha256"
 
     def get_description(self):
-        return "Blank Sd Image"
+        return "Blank SD Image"
 
     def __init__(self, configs):
         self.image = configs['blank_image']['image']

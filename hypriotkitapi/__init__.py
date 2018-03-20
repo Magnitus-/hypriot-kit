@@ -41,9 +41,10 @@ def build(target=None, volume='hypriot-artifacts', image='magnitus/hypriot-kit:l
             volumes[user_configs_path] = "/opt/app/user/configs.json"
 
     client = docker.from_env()
-    client.containers.run(
+    container = client.containers.run(
         image=image,
         remove=True,
+        detach=True,
         volumes=volumes,
         environment={
             "HYPRIOT_ARTIFACTS_VOLUME": volume,
@@ -51,6 +52,9 @@ def build(target=None, volume='hypriot-artifacts', image='magnitus/hypriot-kit:l
         },
         command=["python", "build.py"]
     )
+    for line in container.logs(stream=True):
+        print line.strip()
+
 
 def get_volume_content(target, volume='hypriot-artifacts', image='magnitus/hypriot-kit:latest'):
     if not volume.startswith('/'):
