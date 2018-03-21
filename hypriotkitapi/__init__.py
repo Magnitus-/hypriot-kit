@@ -38,7 +38,9 @@ def build(target=None, volume='hypriot-artifacts', image='magnitus/hypriot-kit:l
     if target is not None:
         user_configs_path = os.path.join(target, 'configs.json')
         if os.path.isfile(user_configs_path):
-            volumes[user_configs_path] = "/opt/app/user/configs.json"
+            volumes[user_configs_path] = {
+                "bind": "/opt/app/user/configs.json"
+            }
 
     client = docker.from_env()
     container = client.containers.run(

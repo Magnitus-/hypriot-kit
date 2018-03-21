@@ -5,8 +5,9 @@ This is a work in progress.
 Missing functionality is outlined below.
 
 TODO:
-- Add logic to merge user-provided configuration into the default
 - Add output for debug verbosity
+- Document user configs
+- Get sd image adaptations merged back to original repo and point to original repo in default config
 
 # Overview
 

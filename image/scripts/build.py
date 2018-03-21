@@ -18,9 +18,25 @@ ARTIFACTS = (
     ('rpi_sd_image', RpiSdImage))
 
 def get_configs():
-    with open(os.path.join(os.getcwd(), 'configs.json'), 'r') as configs_file:
-        default_config = json.loads(configs_file.read())
-    return default_config
+    default_configs_path = os.path.join(os.getcwd(), 'configs.json')
+    user_configs_path = os.path.join('/', 'opt', 'app', 'user', 'configs.json')
+    user_configs = None
+
+    with open(default_configs_path, 'r') as configs_file:
+        default_configs = json.loads(configs_file.read())
+
+    if os.path.isfile(user_configs_path):
+        with open(user_configs_path, 'r') as configs_file:
+            user_configs = json.loads(configs_file.read())
+
+    if user_configs is None:
+        return default_configs
+    else:
+        for key in user_configs:
+            merged_key = default_configs[key].copy()
+            merged_key.update(user_configs[key])
+            user_configs[key] = merged_key
+        return user_configs
 
 if __name__ == "__main__":
     configs = get_configs()
