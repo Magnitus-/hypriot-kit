@@ -6,7 +6,6 @@ Missing functionality is outlined below.
 
 TODO:
 - Add output for debug verbosity
-- Document user configs
 - Get sd image adaptations merged back to original repo and point to original repo in default config
 
 # Overview
@@ -127,4 +126,67 @@ hypriotkit --help
 
 ## Configuration format
 
-TODO
+The behavior of the hypriotkit build is influenced by the project configuration.
+
+The default configuration file can be found at the following path in the project: ```image/configs.json```
+
+Here is the breakdown of the configuration fields:
+
+* base_image: Image used as a base to build all the other building images
+  * image: Name to give to the base image. Note that if you change this value, you'll have to change the expected base image in all the other build repos that you use.
+  * repo: Repo containing the logic to build the image. Can be the official repo (default) or your custom fork of it.
+* root_fs: Core root filesystem for your SD image
+  * image: Name to give to the build image that will generate the artifact
+  * repo: Repo containing logic to build the build image. Can be the official repo (default) or your custom fork of it.
+  * target: Source of the core root filesystem. Can be any of the following: arm64-debian, armhf-debian, armhf-raspbian, mips, amd64, i386
+  * hostname: Hostname the os will give itself
+  * groupname: Default user groupname
+  * username: Default user username
+  * password: Default user password
+  * version: Version tag of the generated filesystem
+* blank_image: Placehold blank image containing the partition sizes of the filesystem
+  * image: Name to give to the build image that will generate the artifact
+  * repo: Repo containing logic to build the build image. Can be the official repo (default) or your custom fork of it.
+  * device: Device to taylor the partitions for. Can be one of the following: rpi, odroid
+* rpi_bootloader: Bootfiles for the Raspberry Pi
+  * image: Name to give to the build image that will generate the artifact
+  * repo: Repo containing logic to build the build image. Can be the official repo (default) or your custom fork of it.
+  * firmware_repo: Repo containing the bootfiles to archive. Can be the official repo (default) or your custom fork of it.
+* rpi_kernel: Raspberry Pi 64 bits kernel
+  * image: Name to give to the build image that will generate the artifact
+  * repo: Repo containing logic to build the build image. Can be the official repo (default) or your custom fork of it.
+  * kernel_repo: Repo to fetch the kernel from. Can be the official repo (default) or your custom fork of it.
+  * branch: Branch of the kernel repo to build from (you can vary this to build different versions of the kernel)
+* rpi_sd_image: Hypriot OS final SD image for the Raspberry Pi 64 bits
+  * image: Name to give to the build image that will generate the artifact
+  * repo: Repo containing logic to build the build image. Can be the official repo (default) or your custom fork of it.
+  * docker_engine_version: Version of the docker engine that should be included in the image
+  * docker_compose_version: Version of docker-compose that should be included in the image
+  * docker_machine_version: Version of Docker Machine that should be included in the image
+  * version: Version tag to give the image
+
+Any user-provided configuration file (should be a file called **configs.json** in the target directory of the artifacts) will be combined with the default file in the following way:
+
+* Only the components listed in the user configuration file will be built.
+* For each component in the user configuration, the values whichever fields are defined in the user configuration file will be used and the values in the default configuration will be used as fallback for the missing fields.
+
+When defining a subset of the components to build, it is helpful to keep the following depedencies in mind:
+
+* root_fs: base_image
+* blank_image: base_image
+* rpi_bootloader: base_image
+* rpi_kernel: base_image
+* rpi_sd_image: root_fs, blank_image, rpi_bootloader, rpi_kernel
+
+For example, a user-provided configuration file to only build the blank image for odroid devices would look like this:
+
+```
+{
+  "base_image": {
+  },
+  "blank_image": {
+    "device": "odroid"
+  }
+}
+
+```
