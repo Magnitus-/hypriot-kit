@@ -1,6 +1,6 @@
 import glob, os
 
-import docker
+import container
 
 from builder import BuilderBase
 
@@ -35,5 +35,4 @@ class RpiBootloader(BuilderBase):
             "image": self.image
         }
 
-        client = docker.from_env()
-        client.containers.run(**args)
+        container.run(args)

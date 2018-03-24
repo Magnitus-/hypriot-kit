@@ -1,6 +1,6 @@
 import glob, os
 
-import docker
+import container
 
 from builder import BuilderBase
 
@@ -76,5 +76,4 @@ class RootFs(BuilderBase):
         for key in RootFs.target_properties[self.target]:
             args['environment'][key] = RootFs.target_properties[self.target][key]
 
-        client = docker.from_env()
-        client.containers.run(**args)
+        container.run(args)

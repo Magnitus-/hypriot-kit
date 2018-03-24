@@ -1,6 +1,6 @@
 import glob, os
 
-import docker
+import container
 
 from root_fs import RootFs
 from blank_image import BlankImage
@@ -66,5 +66,4 @@ class RpiSdImage(BuilderBase):
             "image": self.image
         }
 
-        client = docker.from_env()
-        return client.containers.run(**args)
+        container.run(args)

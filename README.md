@@ -5,7 +5,6 @@ This is a work in progress.
 Missing functionality is outlined below.
 
 TODO:
-- Add output for debug verbosity
 - Get sd image adaptations merged back to original repo and point to original repo in default config
 
 # Overview

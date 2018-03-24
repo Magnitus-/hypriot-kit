@@ -1,6 +1,6 @@
 import glob, os
 
-import docker
+import container
 
 from builder import BuilderBase
 
@@ -45,5 +45,4 @@ class BlankImage(BuilderBase):
         elif self.device == "odroid":
             args['command'] = "/builder/odroid/build.sh"
 
-        client = docker.from_env()
-        client.containers.run(**args)
+        container.run(args)
