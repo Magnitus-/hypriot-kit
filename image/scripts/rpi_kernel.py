@@ -1,5 +1,7 @@
 import glob, os
 
+import docker
+
 import container
 
 from builder import BuilderBase
