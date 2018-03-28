@@ -32,8 +32,8 @@
     "rpi_sd_image": {
         "image": "hypriot/rpi-sd-image:latest",
         "repo": "https://github.com/Magnitus-/image-builder-rpi64.git",
-        "docker_engine_version": "18.02.0~ce",
-        "docker_compose_version": "1.19.0",
+        "docker_engine_version": "18.03.0~ce",
+        "docker_compose_version": "1.20.1",
         "docker_machine_version": "0.13.0",
         "version": "latest"
     }
