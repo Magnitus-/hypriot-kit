@@ -17,9 +17,9 @@ My current aim is to compile a 64 bit Raspberry Pi hypriot image. Support for ot
 
 # Compatibility
 
-You will need Python 2, the [Docker Python Package](https://github.com/docker/docker-py), Docker, docker-machine, Virtualbox and I think that's about it.
+You will need Python 2, the [Docker Python Package](https://github.com/docker/docker-py), Docker.
 
-This script is being developped on a Ubuntu 16.04 machine and should work on any Linux machines that have a kernel recent enough to run Docker.
+This script was developped on a Ubuntu 16.04 machine and should work on any Linux machines that have a kernel recent enough to run Docker.
 
 # Usage
 
