@@ -1,12 +1,3 @@
-# WIP
-
-This is a work in progress.
-
-Missing functionality is outlined below.
-
-TODO:
-- Get sd image adaptations merged back to original repo and point to original repo in default config
-
 # Overview
 
 This repo is meant to automatically generate SD images and image artifacts from the Hypriot OS repos.
