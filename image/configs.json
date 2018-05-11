@@ -27,14 +27,14 @@
         "image": "hypriot/rpi-kernel:latest",
         "repo": "https://github.com/DieterReuter/rpi64-kernel.git",
         "kernel_repo": "https://www.github.com/raspberrypi/linux",
-        "branch": "rpi-4.9.y"
+        "branch": "rpi-4.14.y"
     },
     "rpi_sd_image": {
         "image": "hypriot/rpi-sd-image:latest",
         "repo": "https://github.com/DieterReuter/image-builder-rpi64.git",
-        "docker_engine_version": "18.03.0~ce",
-        "docker_compose_version": "1.20.1",
-        "docker_machine_version": "0.13.0",
+        "docker_engine_version": "18.04.0~ce~3",
+        "docker_compose_version": "1.21.1",
+        "docker_machine_version": "0.14.0",
         "version": "latest"
     }
 }
