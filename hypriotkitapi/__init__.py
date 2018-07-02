@@ -2,18 +2,21 @@ import os
 
 import docker
 
-def upgrade_image(image='magnitus/hypriot-kit:latest'):
+DEFAULT_IMAGE='magnitus/hypriot-kit:1'
+DEFAULT_VOLUME='hypriot-artifacts'
+
+def upgrade_image(image=DEFAULT_IMAGE):
     client = docker.from_env()
     client.images.pull(image)
 
-def ensure_image(image='magnitus/hypriot-kit:latest'):
+def ensure_image(image=DEFAULT_IMAGE):
     try:
         client = docker.from_env()
         client.images.get(image)
     except docker.errors.ImageNotFound:
         client.images.pull(image)
 
-def ensure_volume(volume='hypriot-artifacts'):
+def ensure_volume(volume=DEFAULT_VOLUME):
     if not volume.startswith('/'):
         try:
             client = docker.from_env()
@@ -25,7 +28,7 @@ def ensure_volume(volume='hypriot-artifacts'):
                 labels={"content": "hypriot-os"}
             )
 
-def build(target=None, volume='hypriot-artifacts', image='magnitus/hypriot-kit:latest', verbosity='quiet'):
+def build(target=None, volume=DEFAULT_VOLUME, image=DEFAULT_IMAGE, verbosity='quiet'):
     volumes = {
         volume: {
             "bind": "/opt/app/artifacts"
@@ -58,7 +61,7 @@ def build(target=None, volume='hypriot-artifacts', image='magnitus/hypriot-kit:l
         print line.strip()
 
 
-def get_volume_content(target, volume='hypriot-artifacts', image='magnitus/hypriot-kit:latest'):
+def get_volume_content(target, volume=DEFAULT_VOLUME, image=DEFAULT_IMAGE):
     if not volume.startswith('/'):
         client = docker.from_env()
         command = "sh -c 'cp /opt/volume/* /opt/target/  && chown {uid}:{gid} /opt/target/*'"
@@ -79,7 +82,7 @@ def get_volume_content(target, volume='hypriot-artifacts', image='magnitus/hypri
             )
         )
 
-def destroy_volume(volume='hypriot-artifacts'):
+def destroy_volume(volume=DEFAULT_VOLUME):
     if not volume.startswith('/'):
         client = docker.from_env()
         client.volumes.get(volume).remove()
