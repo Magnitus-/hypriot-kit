@@ -14,6 +14,7 @@ class RpiBootloader(BuilderBase):
     def __init__(self, configs):
         self.image = configs['rpi_bootloader']['image']
         self.repo = configs['rpi_bootloader']['repo']
+        self.branch = configs['rpi_bootloader'].get('branch')
         self.firmware_repo = configs['rpi_bootloader']['firmware_repo']
 
     def get_artifacts_names(self):

@@ -27,7 +27,7 @@
         "image": "hypriot/rpi-kernel:latest",
         "repo": "https://github.com/DieterReuter/rpi64-kernel.git",
         "kernel_repo": "https://www.github.com/raspberrypi/linux",
-        "branch": "rpi-4.14.y"
+        "kernel_branch": "rpi-4.14.y"
     },
     "rpi_sd_image": {
         "image": "hypriot/rpi-sd-image:latest",

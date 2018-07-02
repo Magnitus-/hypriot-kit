@@ -40,6 +40,7 @@ class RootFs(BuilderBase):
     def __init__(self, configs):
         self.image = configs['root_fs']['image']
         self.repo = configs['root_fs']['repo']
+        self.branch = configs['root_fs'].get('branch')
         self.target = configs['root_fs']['target']
         self.hostname = configs['root_fs']['hostname']
         self.groupname = configs['root_fs']['groupname']

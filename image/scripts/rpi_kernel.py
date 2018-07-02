@@ -19,8 +19,9 @@ class RpiKernel(BuilderBase):
     def __init__(self, configs):
         self.image = configs['rpi_kernel']['image']
         self.repo = configs['rpi_kernel']['repo']
+        self.branch = configs['rpi_kernel'].get('branch')
         self.kernel_repo = configs['rpi_kernel']['kernel_repo']
-        self.branch = configs['rpi_kernel']['branch']
+        self.branch = configs['rpi_kernel']['kernel_branch']
 
     def get_kernel_version(self):
         if not self.image_is_built():

@@ -18,7 +18,7 @@ class BuilderBase(object):
     def build_image(self):
         show('Building build image ' + self.image + '.', 'info')
         repo_dir = os.path.join(os.environ.get('WORKSPACE'), 'repos', self.repo)
-        clone(self.repo, repo_dir)
+        clone(self.repo, repo_dir, self.branch)
         client = docker.from_env()
         client.images.build(path=repo_dir, tag=self.image)
         shutil.rmtree(repo_dir)

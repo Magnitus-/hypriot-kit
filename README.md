@@ -125,9 +125,11 @@ Here is the breakdown of the configuration fields:
 * base_image: Image used as a base to build all the other building images
   * image: Name to give to the base image. Note that if you change this value, you'll have to change the expected base image in all the other build repos that you use.
   * repo: Repo containing the logic to build the image. Can be the official repo (default) or your custom fork of it.
+  * branch: Branch in the repo to use to build the image. Can be omitted in which case the default branch of the repo will be used.
 * root_fs: Core root filesystem for your SD image
   * image: Name to give to the build image that will generate the artifact
   * repo: Repo containing logic to build the build image. Can be the official repo (default) or your custom fork of it.
+  * branch: Branch in the repo to use to build the image. Can be omitted in which case the default branch of the repo will be used.
   * target: Source of the core root filesystem. Can be any of the following: arm64-debian, armhf-debian, armhf-raspbian, mips, amd64, i386
   * hostname: Hostname the os will give itself
   * groupname: Default user groupname
@@ -137,19 +139,23 @@ Here is the breakdown of the configuration fields:
 * blank_image: Placehold blank image containing the partition sizes of the filesystem
   * image: Name to give to the build image that will generate the artifact
   * repo: Repo containing logic to build the build image. Can be the official repo (default) or your custom fork of it.
+  * branch: Branch in the repo to use to build the image. Can be omitted in which case the default branch of the repo will be used.
   * device: Device to taylor the partitions for. Can be one of the following: rpi, odroid
 * rpi_bootloader: Bootfiles for the Raspberry Pi
   * image: Name to give to the build image that will generate the artifact
   * repo: Repo containing logic to build the build image. Can be the official repo (default) or your custom fork of it.
+  * branch: Branch in the repo to use to build the image. Can be omitted in which case the default branch of the repo will be used.
   * firmware_repo: Repo containing the bootfiles to archive. Can be the official repo (default) or your custom fork of it.
 * rpi_kernel: Raspberry Pi 64 bits kernel
   * image: Name to give to the build image that will generate the artifact
   * repo: Repo containing logic to build the build image. Can be the official repo (default) or your custom fork of it.
+  * branch: Branch in the repo to use to build the image. Can be omitted in which case the default branch of the repo will be used.
   * kernel_repo: Repo to fetch the kernel from. Can be the official repo (default) or your custom fork of it.
-  * branch: Branch of the kernel repo to build from (you can vary this to build different versions of the kernel)
+  * kernel_branch: Branch of the kernel repo to build from (you can vary this to build different versions of the kernel)
 * rpi_sd_image: Hypriot OS final SD image for the Raspberry Pi 64 bits
   * image: Name to give to the build image that will generate the artifact
   * repo: Repo containing logic to build the build image. Can be the official repo (default) or your custom fork of it.
+  * branch: Branch in the repo to use to build the image. Can be omitted in which case the default branch of the repo will be used.
   * docker_engine_version: Version of the docker engine that should be included in the image
   * docker_compose_version: Version of docker-compose that should be included in the image
   * docker_machine_version: Version of Docker Machine that should be included in the image

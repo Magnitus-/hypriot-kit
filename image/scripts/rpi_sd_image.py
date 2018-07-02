@@ -19,6 +19,7 @@ class RpiSdImage(BuilderBase):
     def __init__(self, configs):
         self.image = configs['rpi_sd_image']['image']
         self.repo = configs['rpi_sd_image']['repo']
+        self.branch = configs['rpi_sd_image'].get('branch')
         self.docker_engine_version = configs['rpi_sd_image']['docker_engine_version']
         self.docker_compose_version = configs['rpi_sd_image']['docker_compose_version']
         self.docker_machine_version = configs['rpi_sd_image']['docker_machine_version']

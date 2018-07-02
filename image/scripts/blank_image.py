@@ -16,6 +16,7 @@ class BlankImage(BuilderBase):
     def __init__(self, configs):
         self.image = configs['blank_image']['image']
         self.repo = configs['blank_image']['repo']
+        self.branch = configs['blank_image'].get('branch')
         self.device = configs['blank_image']['device']
 
     def get_artifacts_names(self):
