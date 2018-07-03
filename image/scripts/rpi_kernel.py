@@ -21,7 +21,7 @@ class RpiKernel(BuilderBase):
         self.repo = configs['rpi_kernel']['repo']
         self.branch = configs['rpi_kernel'].get('branch')
         self.kernel_repo = configs['rpi_kernel']['kernel_repo']
-        self.branch = configs['rpi_kernel']['kernel_branch']
+        self.kernel_branch = configs['rpi_kernel']['kernel_branch']
 
     def get_kernel_version(self):
         if not self.image_is_built():
@@ -32,7 +32,7 @@ class RpiKernel(BuilderBase):
             "privileged": True,
             "environment": {
                 "TIMESTAMP_OUTPUT": False,
-                "RPI_KERNEL_BRANCH": self.branch,
+                "RPI_KERNEL_BRANCH": self.kernel_branch,
                 "RPI_KERNEL_REPO": self.kernel_repo
             },
             "command": "/get-kernel-version.sh",
@@ -64,7 +64,7 @@ class RpiKernel(BuilderBase):
             },
             "environment": {
                 "TIMESTAMP_OUTPUT": "false",
-                "RPI_KERNEL_BRANCH": self.branch,
+                "RPI_KERNEL_BRANCH": self.kernel_branch,
                 "RPI_KERNEL_REPO": self.kernel_repo
             },
             "image": self.image
